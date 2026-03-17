@@ -1,0 +1,163 @@
+<!doctype html>
+<!--
+  Template matching the original Tevin portfolio structure.
+
+  Replace placeholders (tokens inside {{ }}) with person-specific values.
+
+  Common tokens:
+    {{NAME}}           - Full name
+    {{TITLE}}          - Role / tagline
+    {{PHOTO_URL}}      - Profile photo path or URL
+    {{RESUME_URL}}     - Link to resume PDF (optional)
+    {{BIO_HTML}}       - Full about/bio section (HTML allowed)
+    {{CONTACT_EMAIL}}  - Email address
+    {{LINKEDIN_URL}}   - LinkedIn URL
+
+  Repeatable blocks (wrap between the START/END markers):
+    <!-- EXP_START --> ... <!-- EXP_END -->    (experience entries)
+    <!-- PROJ_START --> ... <!-- PROJ_END -->  (project entries)
+    <!-- SKILL_START --> ... <!-- SKILL_END --> (skill entries)
+    <!-- AWARD_START --> ... <!-- AWARD_END --> (award entries)
+    <!-- EDU_START --> ... <!-- EDU_END -->     (education entries)
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{NAME}} | {{TITLE}}</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <span class="logo">{{NAME}}</span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <!-- Replace or remove the <img> line if no photo is available -->
+    <img src="{{PHOTO_URL}}" alt="{{NAME}}" class="profile-photo">
+    <h1>{{NAME}}</h1>
+    <p>{{TITLE}}</p>
+    <a href="{{RESUME_URL}}" class="btn btn-light">View Resume (PDF)</a>
+    <button id="certs-toggle" class="btn btn-light" style="margin-left:12px">Certificates</button>
+    <div id="certs-panel" style="display:none;max-width:760px;margin:18px auto 0;text-align:left;">
+      <div id="cert-list" style="margin-top:8px;padding-left:18px"></div>
+    </div>
+  </header>
+
+  <main>
+
+  <section id="about">
+    <h2>About</h2>
+    <!-- Insert HTML or plain text for the about section -->
+    {{BIO_HTML}}
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+
+    <!-- EXP_START -->
+    <h3>{{EXP_COMPANY}} ({{EXP_YEARS}})</h3>
+    <p><strong>{{EXP_ROLE}}</strong></p>
+    <ul>
+      {{EXP_BULLETS_HTML}}
+    </ul>
+    <!-- EXP_END -->
+
+  </section>
+
+  <section id="projects">
+    <h2>Key Projects</h2>
+
+    <!-- PROJ_START -->
+    <h3>{{PROJECT_TITLE}}</h3>
+    <p><strong>Problem:</strong> {{PROJECT_PROBLEM}}</p>
+    <p><strong>Action:</strong> {{PROJECT_ACTION}}</p>
+    <p><strong>Result:</strong> {{PROJECT_RESULT}}</p>
+    <!-- PROJ_END -->
+
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul>
+      <!-- SKILL_START -->
+      <li>{{SKILL}}</li>
+      <!-- SKILL_END -->
+    </ul>
+  </section>
+
+  <section id="awards">
+    <h2>Awards</h2>
+    <ul>
+      <!-- AWARD_START -->
+      <li>{{AWARD}}</li>
+      <!-- AWARD_END -->
+    </ul>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <!-- EDU_START -->
+    <p><strong>{{EDU_TITLE}}</strong> – {{EDU_INSTITUTION}} ({{EDU_YEARS}})</p>
+    <!-- EDU_END -->
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Phone: {{CONTACT_PHONE}}</p>
+    <p>Email: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+    <p>LinkedIn: <a href="{{LINKEDIN_URL}}" target="_blank" rel="noopener">{{LINKEDIN_URL}}</a></p>
+    <p>Location: {{LOCATION}}</p>
+  </section>
+
+</main>
+
+  <script>
+  (function(){
+    const toggle = document.getElementById('certs-toggle');
+    const panel = document.getElementById('certs-panel');
+    const list = document.getElementById('cert-list');
+
+    toggle && toggle.addEventListener('click', ()=>{
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      if(panel.style.display === 'block') loadCerts();
+    });
+
+    async function loadCerts(){
+      list.innerHTML = '<div style="color:var(--muted)">Loading…</div>';
+      try{
+        const res = await fetch('certs.json',{cache:'no-store'});
+        if(!res.ok) throw new Error('No certs.json');
+        const items = await res.json();
+        if(!items.length){ list.innerHTML = '<div style="color:var(--muted)">No certificates listed. Add files to `/certs/` and entries to `certs.json`.</div>'; return; }
+        list.innerHTML = '';
+        items.forEach(it=>{
+          const a = document.createElement('a');
+          a.href = it.file;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = it.name || it.file;
+          const li = document.createElement('div');
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+      }catch(e){
+        list.innerHTML = '<div style="color:var(--muted)">No certificate list found. Create `certs.json` in the project root.</div>';
+      }
+    }
+  })();
+  </script>
+
+</body>
+</html>
