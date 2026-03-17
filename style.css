@@ -239,3 +239,31 @@ html { scroll-behavior: smooth }
 /* Job title badge */
 .job-title { display: inline-block; background: rgba(87,6,46,0.07); color: #57062e; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 4px; border-left: 3px solid #57062e; margin: 2px 0 14px; }
 
+/* Project link buttons */
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.project-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: #57062e;
+  border: 1px solid rgba(87,6,46,0.25);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.project-link-btn:hover {
+  background: #6d0a3a;
+  box-shadow: 0 4px 12px rgba(87,6,46,0.2);
+  transform: translateY(-1px);
+}
+

@@ -43,7 +43,7 @@ git push -u origin main
 ### 7. Your site is live
 After about 1–2 minutes your portfolio will be live at:
 ```
-https://your-username.github.io
+https://danikasingh.github.io
 ```
 
 ---
