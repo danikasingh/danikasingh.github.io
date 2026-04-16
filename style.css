@@ -15,6 +15,7 @@ body {
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   margin: 0;
   padding-top: 53px;
+  line-height: 1.6;
   color: var(--text-light);
   background: var(--bg);
   -webkit-font-smoothing:antialiased;
@@ -102,13 +103,18 @@ section.visible {
 
 h3 {
     margin-top: 24px;
+  margin-bottom: 6px;
+  color: #2b1b23;
 }
 
 ul { 
-    line-height: 1.6;
+  line-height: 1.7;
+  margin-top: 8px;
 }
 
 li {margin-bottom:8px}
+
+p { margin: 10px 0; }
 
 nav {
   background: rgba(87, 6, 46, 0.75);
@@ -235,6 +241,9 @@ html { scroll-behavior: smooth }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { background: rgba(87,6,46,0.07); color: #57062e; border: 1px solid rgba(87,6,46,0.2); padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; transition: background 0.2s, transform 0.2s; }
 .chip:hover { background: rgba(87,6,46,0.14); transform: translateY(-1px); }
+
+#contact a,
+#projects a { text-decoration: underline; text-underline-offset: 2px; }
 
 /* Job title badge */
 .job-title { display: inline-block; background: rgba(87,6,46,0.07); color: #57062e; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 4px; border-left: 3px solid #57062e; margin: 2px 0 14px; }
